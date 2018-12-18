@@ -12,6 +12,8 @@ import android.widget.Button;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.nightonke.boommenu.BoomButtons.HamButton;
+import com.nightonke.boommenu.BoomMenuButton;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,48 +23,48 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.e("TAG", "onStart: " );
-        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        @Override
+        protected void onStart () {
+            super.onStart();
+            Log.e("TAG", "onStart: ");
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-                if (firebaseUser == null) {
-                    Button loginButton=findViewById(R.id.login_button);
-                    loginButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent loginIntent = AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setLogo(R.drawable.ic_launcher_background)
-                                    // .setIsSmartLockEnabled(false)
-                                    .setAvailableProviders(Collections.singletonList(
+                    if (firebaseUser == null) {
+                        Button loginButton = findViewById(R.id.login_button);
+                        loginButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent loginIntent = AuthUI.getInstance()
+                                        .createSignInIntentBuilder()
+                                        .setLogo(R.drawable.ic_launcher_background)
+                                        // .setIsSmartLockEnabled(false)
+                                        .setAvailableProviders(Collections.singletonList(
 
-                                            new AuthUI.IdpConfig.FacebookBuilder().build()))
-
-
-                                    .build();
-                            startActivity(loginIntent);
-
-                        }
-                    });
+                                                new AuthUI.IdpConfig.FacebookBuilder().build()))
 
 
-            }
-            else
-                {
-                    Log.e("TAG", "onAuthStateChanged: "+firebaseUser.getDisplayName());
-                    Intent i=new Intent(getBaseContext(),MainActivity.class);
-                startActivity(i);
+                                        .build();
+                                startActivity(loginIntent);
+
+                            }
+                        });
+
+
+                    } else {
+                        Log.e("TAG", "onAuthStateChanged: " + firebaseUser.getDisplayName());
+                        Intent i = new Intent(getBaseContext(), MainActivity.class);
+                        startActivity(i);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
-}
+
