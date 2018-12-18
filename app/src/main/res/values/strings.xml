@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">SharedCalender</string>
+    <string name="button">Pick Date</string>
+    <string name="date">Date</string>
+    <string name="add_event">ADD EVENT</string>
+    <string name="textview">TextView</string>
+    <string name="events">EVENTS</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
+    <string name="pick_time">Pick Time</string>
+    <string name="event_name">Event Name</string>
+    <string name="club_name">Club Name</string>
+    <string name="event_participators">Event Participators</string>
+    <string name="submit">SUBMIT</string>
 </resources>
