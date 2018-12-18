@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "978433640016",
+    "firebase_url": "https://sharedcalender-c7329.firebaseio.com",
+    "project_id": "sharedcalender-c7329",
+    "storage_bucket": "sharedcalender-c7329.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978433640016:android:24709a957cb83281",
+        "android_client_info": {
+          "package_name": "com.cyberlabs.clubs.sharedcalender"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978433640016-u8mk37bavumkjf2vd57j2cig7nl4miga.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cyberlabs.clubs.sharedcalender",
+            "certificate_hash": "1ce8a435fe201e445e8d4cb16c84c2c3e63f5177"
+          }
+        },
+        {
+          "client_id": "978433640016-g0fc554uk6p3mi0sq7b9lqtnhjsno48v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmph8sZqcqFV70HO1ZUn-YmLp5uia5A6s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978433640016-g0fc554uk6p3mi0sq7b9lqtnhjsno48v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
