@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 import com.nightonke.boommenu.BoomButtons.HamButton;
@@ -22,12 +23,14 @@ import com.nightonke.boommenu.BoomMenuButton;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
-     AddEventFragment.AddEventFragmentlistener{
+     AddEventFragment.AddEventFragmentlistener {
     RecyclerView recyclerView;           //Added Dependencies for Recycler View and Card View
     EventAdapter adapter;                //Event object adapter
     List<Event> eventList;              //Stores Data
@@ -43,11 +46,12 @@ public class MainActivity extends AppCompatActivity implements
 //        Button btnTime = (Button) findViewById(R.id.btnPickTime);
 //        Button btnAddEvent = (Button) findViewById(R.id.btnAddEvent);
         eventList = new ArrayList<>();
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        int[] hamMenu = new int[]{R.string.clabs,R.string.wtc,R.string.udaan,R.string.add_event};
+        int[] hamMenu = new int[]{R.string.edu,R.string.dandm,R.string.litry,R.string.aandd,R.string.add_event};
        // String[] strings=new String[]{"PICK DATE","PICK TIME","ADD EVENT"};
 
 
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements
                             switch(index)
                             {
 
-                                case 3:    DialogFragment eventAdder = new AddEventFragment();
+                                case 4:    DialogFragment eventAdder = new AddEventFragment();
                                     eventAdder .show(getSupportFragmentManager(),"Add a Event"); break;
 
                             }
@@ -83,26 +87,27 @@ public class MainActivity extends AppCompatActivity implements
                         "CYBERLABS", //to add
                         "Android WorkShop",
                         "Club Members",
-                        "16/12/2018 10 am",
-                        R.drawable.macbook));   // to add
+                        "26/12/2018 10:00",
+                        R.drawable.cyberlabs));   // to add
 
         eventList.add(
                 new Event(
-                        1,
+                        2,
                         "wtc",
                         "Dance Mania",
                         "Everyone",
-                        "16/10/2018 6pm",
-                        R.drawable.dellinspiron));
+                        "18/10/2018 18:00",
+                        R.drawable.wtc));
 
         eventList.add(
                 new Event(
                         1,
                         "Udaan",
-                        "Chai pe Kahrcha",
+                        "Touch the Sky",
                         "Everyone",
-                        "16/12/2018 7pm",
-                        R.drawable.surface));
+                        "01/12/2018 19:30",
+                        R.drawable.udaan));
+        Collections.sort(eventList);  //Sort EventList
         //Create adapter of the Recycler View and set Adapter
         adapter = new EventAdapter(this,eventList);
         recyclerView.setAdapter(adapter);
@@ -166,22 +171,30 @@ public class MainActivity extends AppCompatActivity implements
         dateTimeDialogFragment.set24HoursMode(true);
         dateTimeDialogFragment.setMinimumDateTime(new GregorianCalendar(2015, Calendar.JANUARY, 1).getTime());
         dateTimeDialogFragment.setMaximumDateTime(new GregorianCalendar(2025, Calendar.DECEMBER, 31).getTime());
-        dateTimeDialogFragment.setDefaultDateTime(new GregorianCalendar(2017, Calendar.MARCH, 4, 15, 20).getTime());
+        dateTimeDialogFragment.setDefaultDateTime(new GregorianCalendar(2019, Calendar.JANUARY, 6, 15, 20).getTime());
         dateTimeDialogFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Date date) {
-                String cDateString =date.getDate()+"/"+(date.getMonth()+1)+"/"+(date.getYear()+1900)+"  "+date.getHours()+":"+date.getMinutes();
-               // String cDateString = DateFormat.getDateTimeInstance(DateFormat.,DateFormat.SHORT).format(c.getTime());
-                eventList.add(                //Data addition
-                        new Event(
-                                1,
-                                cname,                        //CLub Name will be available on Login
-                                ename,                        //Event Name Entry
-                                p,                            //Participants Entry
-                                cDateString,                //dd+"/"+mm+"/"+yy+ "   "+hh+":"+mli,  //Date Picked
-                                R.drawable.macbook));        //Image is the Club Logo which will be available on Login
-                adapter = new EventAdapter(getBaseContext(),eventList);   //Update Recycler View
-                recyclerView.setAdapter(adapter);
+                Date currDate = new Date();
+                if(date.after(currDate)) {
+                    //String cDateString =date.getDate()+"/"+(date.getMonth()+1)+"/"+(date.getYear()+1900)+" "+date.getHours()+":"+date.getMinutes();
+                    String cDateString = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(date);
+                    eventList.add(                //Data addition
+                            new Event(
+                                    3,
+                                    cname,                        //CLub Name will be available on Login
+                                    ename,                        //Event Name Entry
+                                    p,                            //Participants Entry
+                                    cDateString,                //dd+"/"+mm+"/"+yy+ "   "+hh+":"+mli,  //Date Picked
+                                    R.drawable.manthan));        //Image is the Club Logo which will be available on Login
+                    Collections.sort(eventList);  //Sort EventList
+                    adapter = new EventAdapter(getBaseContext(), eventList);   //Update Recycler View
+                    recyclerView.setAdapter(adapter);
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this,"Please Select an upcoming Date",Toast.LENGTH_LONG).show();
+                }
 
             }
 

@@ -1,6 +1,12 @@
 package com.cyberlabs.clubs.sharedcalender;
 
-public class Event {
+import android.support.annotation.NonNull;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Event implements Comparable<Event>{
     private int id;
     private String clubName;           //club name
     private String eventName;       //Event Name
@@ -8,7 +14,7 @@ public class Event {
     private String dateAndTime;            //date and time
     private int image;
 
-    public Event(int id, String clubName, String eventName, String participators, String dateAndTime, int image) {
+    public Event(int id, String clubName, String eventName, String participators, String dateAndTime, int image){
         this.id = id;
         this.clubName = clubName;
         this.eventName = eventName;
@@ -39,5 +45,34 @@ public class Event {
 
     public int getImage() {
         return image;
+    }
+
+
+    @Override
+    public int compareTo(@NonNull Event u) {
+        String arr1[] = getDateAndTime().split(" ", 2);
+        String arr2[] = u.getDateAndTime().split(" ", 2);
+        //Get 1st word of string
+        String sDate1 = arr1[0];
+        String sDate2 = arr2[0];
+        //Convert string date to date
+        Date date1= null;
+        try {
+            date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date date2= null;
+        try {
+            date2 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (date1.compareTo(date2)>0) {
+            return 0;
+        }
+
+        return getDateAndTime().compareTo(u.getDateAndTime());
     }
 }

@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "978433640016-kvl59so1edbrj2vgun46dndq54lh2m4s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cyberlabs.clubs.sharedcalender",
+            "certificate_hash": "d28bb32d0d8e570deeef712b8f737c4664f39b06"
+          }
+        },
+        {
           "client_id": "978433640016-g0fc554uk6p3mi0sq7b9lqtnhjsno48v.apps.googleusercontent.com",
           "client_type": 3
         }
