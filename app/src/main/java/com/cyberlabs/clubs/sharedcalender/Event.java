@@ -10,17 +10,19 @@ public class Event implements Comparable<Event>{
     private int id;
     private String clubName;           //club name
     private String eventName;       //Event Name
+    private String venue;
     private String participators;
     private String dateAndTime;            //date and time
     private int image;
 
-    public Event(int id, String clubName, String eventName, String participators, String dateAndTime, int image){
+    public Event(int id, String clubName, String eventName, String participators, String dateAndTime,String venue, int image){
         this.id = id;
         this.clubName = clubName;
         this.eventName = eventName;
         this.participators = participators;
         this.dateAndTime = dateAndTime;
         this.image = image;
+        this.venue=venue;
     }
 
     public int getId() {
@@ -47,7 +49,11 @@ public class Event implements Comparable<Event>{
         return image;
     }
 
+    public String getVenue() {
+        return venue;
+    }
 
+    //Compare Events on basis of their dates
     @Override
     public int compareTo(@NonNull Event u) {
         String arr1[] = getDateAndTime().split(" ", 2);

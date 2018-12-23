@@ -56,6 +56,6 @@ public class AddEventFragment extends DialogFragment {
     }
     //Details Entered Listener
     public interface AddEventFragmentlistener{
-        void postEvent(String cname, String ename, String p);
+        void postEvent(String cname, String ename, String p);  //cname is to be replaced by venue
     }
 }

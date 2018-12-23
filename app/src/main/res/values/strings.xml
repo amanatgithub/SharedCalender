@@ -21,4 +21,10 @@
  <string name="facebook_app_id" translatable="false">352880178595791</string>
  <string name="facebook_application_id" translatable="false">352880178595791</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb352880178595791</string>
+    <string name="post">POST</string>
+    <string name="cyberlabs">CYBERLABS</string>
+    <string name="venue">Venue</string>
+    <string name="android_workshop">Android Workshop</string>
+    <string name="everyone">Everyone</string>
+    <string name="date_and_time">Date and Time</string>
 </resources>

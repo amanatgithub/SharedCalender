@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements
                         public void onBoomButtonClick(int index) {
                             switch(index)
                             {
+                                case 1:
+
+                                    break;
 
                                 case 4:    DialogFragment eventAdder = new AddEventFragment();
                                     eventAdder .show(getSupportFragmentManager(),"Add a Event"); break;
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements
         yy=c.get(Calendar.YEAR); mm=c.get(Calendar.MONTH); dd=c.get(Calendar.DAY_OF_MONTH);
         hh=c.get(Calendar.HOUR_OF_DAY);  mi=c.get(Calendar.MINUTE);
         //Data added to List for Recycler View
+
         eventList.add(
                 new Event(
                         1,
@@ -88,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements
                         "Android WorkShop",
                         "Club Members",
                         "26/12/2018 10:00",
+                        "SAC 112",
                         R.drawable.cyberlabs));   // to add
 
         eventList.add(
@@ -97,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements
                         "Dance Mania",
                         "Everyone",
                         "18/10/2018 18:00",
+                        "SAC 112",
                         R.drawable.wtc));
 
         eventList.add(
@@ -106,11 +113,36 @@ public class MainActivity extends AppCompatActivity implements
                         "Touch the Sky",
                         "Everyone",
                         "01/12/2018 19:30",
+                        "SAC 112",
                         R.drawable.udaan));
         Collections.sort(eventList);  //Sort EventList
         //Create adapter of the Recycler View and set Adapter
         adapter = new EventAdapter(this,eventList);
         recyclerView.setAdapter(adapter);
+        //Code to delete items when swiped-------------
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+
+                        eventList.remove(viewHolder.getAdapterPosition());
+                        adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    }
+
+                    @Override
+                    public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
+                        super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
+                    }
+                };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
 
 //        btnAddEvent.setOnClickListener(new View.OnClickListener() {//Add Event Dialog Call
@@ -163,19 +195,22 @@ public class MainActivity extends AppCompatActivity implements
     public void postEvent(final String cname, final String ename, final String p) {
 
         SwitchDateTimeDialogFragment dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
-                "Title example",
+                "Select a Date",
                 "OK",
                 "Cancel"
         );
+        final Date currDate = new Date();
+        Calendar cal = Calendar.getInstance();
+        c.setTime(currDate);
         dateTimeDialogFragment.startAtCalendarView();
         dateTimeDialogFragment.set24HoursMode(true);
         dateTimeDialogFragment.setMinimumDateTime(new GregorianCalendar(2015, Calendar.JANUARY, 1).getTime());
-        dateTimeDialogFragment.setMaximumDateTime(new GregorianCalendar(2025, Calendar.DECEMBER, 31).getTime());
-        dateTimeDialogFragment.setDefaultDateTime(new GregorianCalendar(2019, Calendar.JANUARY, 6, 15, 20).getTime());
+        dateTimeDialogFragment.setMaximumDateTime(new GregorianCalendar(2050, Calendar.DECEMBER, 31).getTime());
+        dateTimeDialogFragment.setDefaultDateTime(new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 18, 15).getTime());
         dateTimeDialogFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Date date) {
-                Date currDate = new Date();
+
                 if(date.after(currDate)) {
                     //String cDateString =date.getDate()+"/"+(date.getMonth()+1)+"/"+(date.getYear()+1900)+" "+date.getHours()+":"+date.getMinutes();
                     String cDateString = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(date);
@@ -186,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements
                                     ename,                        //Event Name Entry
                                     p,                            //Participants Entry
                                     cDateString,                //dd+"/"+mm+"/"+yy+ "   "+hh+":"+mli,  //Date Picked
+                                    "SAC 112",  //updated from cname
                                     R.drawable.manthan));        //Image is the Club Logo which will be available on Login
                     Collections.sort(eventList);  //Sort EventList
                     adapter = new EventAdapter(getBaseContext(), eventList);   //Update Recycler View
@@ -203,6 +239,7 @@ public class MainActivity extends AppCompatActivity implements
                 // Date is get on negative button click
             }
         });
+
         dateTimeDialogFragment.show(getSupportFragmentManager(), "dialog_time");
 
     }

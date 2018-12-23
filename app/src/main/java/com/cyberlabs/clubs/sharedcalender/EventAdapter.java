@@ -40,6 +40,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventViewHol
         final Event event = eventList.get(position);
         holder.textViewClubName.setText(event.getClubName());
         holder.textDesc.setText(event.getEventName());
+        holder.textVenue.setText(event.getVenue());
         holder.textDateAndTime.setText(String.valueOf( event.getDateAndTime()));
         holder.textParticipators.setText("For "+String.valueOf( event.getParticipators()));
         holder.imageView.setImageDrawable(mContext.getResources().getDrawable(event.getImage()));
@@ -68,7 +69,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventViewHol
 
     class eventViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
-        TextView textViewClubName, textDesc, textParticipators, textDateAndTime;
+        TextView textViewClubName, textDesc, textParticipators, textDateAndTime, textVenue;
         LinearLayout list_layout;
 
 
@@ -79,6 +80,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventViewHol
             textDesc =itemView.findViewById(R.id.textViewEventName);
             textParticipators =itemView.findViewById(R.id.textViewParticipators);
             textDateAndTime =itemView.findViewById(R.id.textViewDateAndTime);
+            textVenue=itemView.findViewById(R.id.textViewVenue);
             list_layout = itemView.findViewById(R.id.list_layout);
         }
     }
