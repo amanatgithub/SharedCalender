@@ -3,12 +3,15 @@ package com.cyberlabs.clubs.sharedcalender;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,6 +19,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
@@ -37,7 +48,11 @@ public class MainActivity extends AppCompatActivity implements
     List<Event> eventList;              //Stores Data
     static private int yy,mm,dd,hh,mi;  //Variables to update year,month, date,hour , min
     Calendar c= Calendar.getInstance();
-
+    String clubName=null;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +61,54 @@ public class MainActivity extends AppCompatActivity implements
 //        Button btnDate = (Button) findViewById(R.id.btnPickDate);
 //        Button btnTime = (Button) findViewById(R.id.btnPickTime);
 //        Button btnAddEvent = (Button) findViewById(R.id.btnAddEvent);
+
+        firebaseAuth=FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        firebaseDatabase =FirebaseDatabase.getInstance();
+        databaseReference =firebaseDatabase.getReference();
+
+        final DatabaseReference clubs=databaseReference.child("clubs");
+
+        clubs.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String key=dataSnapshot.getValue(String.class);
+
+
+                if(key.equals(firebaseUser.getEmail()))
+                {
+                    clubName=dataSnapshot.getKey();
+
+                }
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        }); //Here you will get club name, if not club user then clubName will be NULL
+
+
+
+
+
         eventList = new ArrayList<>();
 
         recyclerView = findViewById(R.id.recyclerView);
