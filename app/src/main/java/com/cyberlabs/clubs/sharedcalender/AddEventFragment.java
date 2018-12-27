@@ -15,7 +15,7 @@ import android.widget.EditText;
 
 //Class that opens Add Event Fragment
 public class AddEventFragment extends DialogFragment {
-    private EditText edit_clubName, edit_eventName, edit_particpants;
+    private EditText edit_venue, edit_eventName, edit_particpants;
     private AddEventFragmentlistener listener;
 
     @NonNull
@@ -32,14 +32,14 @@ public class AddEventFragment extends DialogFragment {
         }).setPositiveButton("Post", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String clubName = edit_clubName.getText().toString();
+                String venue = edit_venue.getText().toString();
                 String eventName = edit_eventName .getText().toString();
                 String participants = edit_particpants.getText().toString();
-                listener.postEvent(clubName,eventName,participants);      //Pass entered details as arguments
+                listener.postEvent(venue,eventName,participants);      //Pass entered details as arguments
 
             }
         });
-        edit_clubName = (EditText) view.findViewById(R.id.editTextClubName);
+        edit_venue = (EditText) view.findViewById(R.id.editTextVenue);
         edit_eventName = (EditText) view.findViewById(R.id.editTextEventName);
         edit_particpants = (EditText) view.findViewById(R.id.editTextParticipators);
         return builder.create();
@@ -56,6 +56,6 @@ public class AddEventFragment extends DialogFragment {
     }
     //Details Entered Listener
     public interface AddEventFragmentlistener{
-        void postEvent(String cname, String ename, String p);  //cname is to be replaced by venue
+        void postEvent(String venue, String ename, String p);  //cname is to be replaced by venue
     }
 }

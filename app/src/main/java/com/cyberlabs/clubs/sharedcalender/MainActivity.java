@@ -2,6 +2,7 @@ package com.cyberlabs.clubs.sharedcalender;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        int[] hamMenu = new int[]{R.string.edu,R.string.dandm,R.string.litry,R.string.aandd,R.string.add_event};
+        int[] hamMenu = new int[]{R.string.edu,R.string.aandd,R.string.litry,R.string.dandm,R.string.add_event};
        // String[] strings=new String[]{"PICK DATE","PICK TIME","ADD EVENT"};
 
 
@@ -130,8 +131,11 @@ public class MainActivity extends AppCompatActivity implements
                         public void onBoomButtonClick(int index) {
                             switch(index)
                             {
-                                case 1:
-
+                                case 3:
+                                    firebaseAuth.signOut();
+                                    Intent loginIntent = new Intent(MainActivity.this, HomeActivity.class);
+                                    startActivity(loginIntent);
+                                    finish();
                                     break;
 
                                 case 4:    DialogFragment eventAdder = new AddEventFragment();
@@ -255,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements
 //    }
 
     @Override
-    public void postEvent(final String cname, final String ename, final String p) {
+    public void postEvent(final String venue, final String ename, final String p) {
 
         SwitchDateTimeDialogFragment dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
                 "Select a Date",
@@ -280,11 +284,11 @@ public class MainActivity extends AppCompatActivity implements
                     eventList.add(                //Data addition
                             new Event(
                                     3,
-                                    cname,                        //CLub Name will be available on Login
+                                    clubName,                        //CLub Name will be available on Login
                                     ename,                        //Event Name Entry
                                     p,                            //Participants Entry
                                     cDateString,                //dd+"/"+mm+"/"+yy+ "   "+hh+":"+mli,  //Date Picked
-                                    "SAC 112",  //updated from cname
+                                    venue,  //updated from cname
                                     R.drawable.manthan));        //Image is the Club Logo which will be available on Login
                     Collections.sort(eventList);  //Sort EventList
                     adapter = new EventAdapter(getBaseContext(), eventList);   //Update Recycler View

@@ -3,20 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
-
-    <com.facebook.login.widget.LoginButton
+    <Button
         android:id="@+id/login_button"
         android:layout_width="294dp"
-        android:layout_height="147dp"
+        android:layout_height="56dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="123dp"
+        android:layout_marginBottom="119dp"
+        android:background="@drawable/g_sign_in"
         tools:layout_editor_absoluteX="102dp"
         tools:layout_editor_absoluteY="342dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="89dp"
+        android:gravity="center"
+        android:text="S҉H҉A҉R҉E҉D҉  C҉A҉L҉E҉N҉D҉E҉R҉"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="60sp"
+        android:layout_alignParentLeft="true" />
 
 </RelativeLayout>

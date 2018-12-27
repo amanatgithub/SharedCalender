@@ -29,8 +29,6 @@ public class HomeActivity extends AppCompatActivity {
        @Override
         protected void onStart () {
             super.onStart();
-           // Intent i = new Intent(getBaseContext(), MainActivity.class);  //change not for push
-           // startActivity(i);  //change noyt for push
             Log.e("TAG", "onStart: ");
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
@@ -55,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
 
                                         .build();
                                 startActivity(loginIntent);
+                                finish();
 
                             }
                         });

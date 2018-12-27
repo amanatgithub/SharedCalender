@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -43,7 +45,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventViewHol
         holder.textVenue.setText(event.getVenue());
         holder.textDateAndTime.setText(String.valueOf( event.getDateAndTime()));
         holder.textParticipators.setText("For "+String.valueOf( event.getParticipators()));
-        holder.imageView.setImageDrawable(mContext.getResources().getDrawable(event.getImage()));
+        ///holder.imageView.setImageDrawable(mContext.getResources().getDrawable(event.getImage()));
+       Picasso.get()  //loads image with url
+                .load("https://firebasestorage.googleapis.com/v0/b/sharedcalender-c7329.appspot.com/o/clubs_images%2Fcyberlabs.jpg?alt=media&token=22e3859b-feaa-4259-a2c4-c1af3d28b722")
+                .placeholder(R.mipmap.ic_launcher)
+                .fit()
+                .into(holder.imageView);
         holder.list_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
